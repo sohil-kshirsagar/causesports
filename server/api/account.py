@@ -16,10 +16,34 @@ accounts = {
 };
 
 
+db = {
+    
+}
+
+
+
+createRecord(tableName, key, record):
+    if (tableName not in db):
+        db[tableName] = {}
+    if (key not in db):
+        db[tableName][key] = record
+    else:
+
+updateRecord(tableName, key, record)
+deleteRecord(tableName, key)
+findRecord(tableName, key)
+getAllRecordsList(tableName)
+
+import createRecord from db;
+createRecord
+
+
+
 def post(account):
     count = len(accounts)
     account['id'] = count + 1
     account['registered'] = datetime.datetime.now()
+
     accounts[account['id']] = account
     return account, 201
 
