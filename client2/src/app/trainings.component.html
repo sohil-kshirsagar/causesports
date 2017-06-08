@@ -1,0 +1,5 @@
+<h2>Future Trainings</h2>
+<div *ngFor="let key of getKeys(trainingList)">
+	<p>{{reformatStart(trainingList[key].date + " " + trainingList[key].time, trainingList[key].duration)}}<br>
+	{{trainingList[key].sport}} @ {{trainingList[key].location}} ({{trainingList[key].level}})</p>
+</div>
