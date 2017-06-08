@@ -117,19 +117,13 @@ paths:
         400:
           description: Error
 
-  /parent/{accountId}:
+  /parent:
     get:
       tags:
       - parent
       description: gets an array of all parents
       produces:
       - application/json
-      parameters:
-      - in: path
-        name: accountId
-        description: accountId used to check if valid account (whether account can access all parents)
-        required: true
-        type: string
       responses:
         200:
           description: Success
@@ -165,7 +159,7 @@ paths:
         400:
           description: Error
 
-  /parent/{accountId}/{parentId}:
+  /parent/{parentId}:
     get:
       tags:
       - parent
@@ -173,11 +167,6 @@ paths:
       produces:
       - application/json
       parameters:
-      - in: path
-        name: accountId
-        description: accountId used to check if user can access this Parent object
-        required: true
-        type: string
       - in: path
         name: parentId
         description: Parent ID
