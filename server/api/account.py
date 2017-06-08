@@ -38,11 +38,11 @@ def delete(id):
     return NoContent, 204
 
 
-def get(id):
-    if accounts.get(id) is None:
+def get(accountId):
+    if accounts.get(accountId) is None:
         return NoContent, 404
 
-    return accounts[id]
+    return accounts[accountId]
 
 def get():
     return accounts.values()
