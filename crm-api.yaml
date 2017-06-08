@@ -1,0 +1,338 @@
+swagger: '2.0'
+
+info:
+  version: 1.0.0
+  title: Cause Sports API
+  description: APIs for the Cause Sports CRM
+
+basePath: /csapi
+
+tags:
+  - name: account
+  - name: parent
+  - name: emergCont
+  - name: player
+  - name: training
+
+paths:
+  /account:
+    get:
+      tags:
+      - account
+      description: gets an array of all accounts
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Account"
+        400:
+          description: Error
+    post:
+      tags:
+      - account
+      description: creates an account object
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: account
+        description: account object that needs to be added
+        required: true
+        schema:
+          $ref: "#/definitions/Account"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/Account"
+        400:
+          description: Error
+
+  /account/{accountId}:
+    get:
+      tags:
+      - account
+      description: gets an Account object based on accountId
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: accountId
+        description: Account ID
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/Account"
+        400:
+          description: Error
+    patch:
+      tags:
+      - account
+      description: Update Account object
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path 
+        name: accountId
+        description: Account ID
+        required: true
+        type: string
+      - in: body
+        name: account
+        description: account object that needs to be updated
+        required: true
+        schema:
+          $ref: "#/definitions/Account"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/Account"
+        400:
+          description: Error
+    delete:
+      tags:
+      - account
+      description: deletes an Account object
+      parameters:
+      - in: path
+        name: accountId
+        description: Account ID
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+
+  /parent/{accountId}:
+    get:
+      tags:
+      - parent
+      description: gets an array of all parents
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: accountId
+        description: accountId used to check if valid account (whether account can access all parents)
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Parent"
+    post:
+      tags:
+      - parent
+      description: creates a parent object
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: accountId
+        description: accountId used to check if valid account/what account to add parent to
+        required: true
+        type: string
+      - in: body
+        name: parent
+        description: parent object that needs to be added
+        required: true
+        schema:
+          $ref: "#/definitions/Parent"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/Parent"
+        400:
+          description: Error
+
+  /parent/{accountId}/{parentId}:
+    get:
+      tags:
+      - parent
+      description: gets a Parent object based on parentId
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: accountId
+        description: accountId used to check if user can access this Parent object
+        required: true
+        type: string
+      - in: path
+        name: parentId
+        description: Parent ID
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/Parent"
+        400:
+          description: Error
+    patch:
+      tags:
+      - parent
+      description: update Parent object
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: accountId
+        description: accountId used to check if user can access this Parent object
+        required: true
+        type: string
+      - in: path
+        name: parentId
+        description: Parent ID
+        required: true
+        type: string
+      - in: body
+        name: parent
+        description: parent object that needs to be updated
+        required: true
+        schema:
+          $ref: "#/definitions/Parent"
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/Parent"
+        400:
+          description: Error
+    delete:
+      tags:
+      - parent
+      description: deletes a Parent object
+      parameters:
+      - in: path
+        name: accountId
+        description: accountId used to check if user can access this Parent object
+        required: true
+        type: string
+      - in: path
+        name: parentId
+        description: Parent ID
+        required: true
+        type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+
+
+definitions:
+  Account:
+    type: object
+    required:
+    - accountId
+    properties:
+      accountId:
+        type: string
+      parentIdArray:
+        type: array
+        items:
+          $ref: "#/definitions/Account"
+      emergContArrray:
+        type: array
+        items:
+          $ref: "#/definitions/EmergCont"
+      playerIdArray:
+        type: array
+        items:
+          $ref: "#/definitions/Player"
+  Parent:
+    type: object
+    required:
+    - parentId
+    properties:
+      parentId:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+  EmergCont:
+    type: object
+    required:
+    - emergContId
+    properties:
+      emergContId:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      phone:
+        type: string
+  Player:
+    type: object
+    required:
+    - playerId
+    properties:
+      playerId:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      dob:
+        type: string
+      gender:
+        type: string
+      comments:
+        type: string
+  Training:
+    type: object
+    required:
+    - trainingId
+    properties:
+      trainingId:
+        type: string
+      date:
+        type: string
+      startTime:
+        type: string
+      duration:
+        type: string
+      location:
+        type: string
+      sport:
+        type: string
+      level:
+        type: string
+      playerIdArray:
+        type: array
+        items:
+          $ref: "#/definitions/Player"
+      playerIdWaitArray:
+        type: array
+        items:
+          $ref: "#/definitions/Player"
