@@ -1,6 +1,19 @@
 from connexion import NoContent
 
-accounts = {}
+accounts = {
+    '1' : {
+        'accountId' : '1',
+        'parentIdArray' : [],
+        'emergContArrray': [],
+        'playerIdArray' : [],
+    },
+    '2' : {
+        'accountId' : '2',
+        'parentIdArray' : [],
+        'emergContArrray' : [],
+        'playerIdArray' : [],
+    },
+};
 
 
 def post(account):
@@ -11,7 +24,6 @@ def post(account):
     return account, 201
 
 def patch(id, account):
-    id = int(id)
     if accounts.get(id) is None:
         return NoContent, 404
     accounts[id] = account
@@ -20,7 +32,6 @@ def patch(id, account):
 
 
 def delete(id):
-    id = int(id)
     if accounts.get(id) is None:
         return NoContent, 404
     del accounts[id]
@@ -28,12 +39,13 @@ def delete(id):
 
 
 def get(id):
-    id = int(id)
     if accounts.get(id) is None:
         return NoContent, 404
 
     return accounts[id]
 
+def get():
+    return accounts.values()
 
 def search():
     # NOTE: we need to wrap it with list for Python 3 as dict_values is not JSON serializable

@@ -19,7 +19,7 @@ paths:
     get:
       tags:
       - account
-      description: gets an array of all accounts
+      description: gets dictionary of accounts
       produces:
       - application/json
       responses:
