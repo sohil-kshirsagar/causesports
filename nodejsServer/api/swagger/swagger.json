@@ -1,0 +1,966 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Cause Sports API",
+    "description": "APIs for the Cause Sports CRM"
+  },
+  "host": "localhost:10010",
+  "basePath": "/csapi",
+  "tags": [
+    {
+      "name": "account"
+    },
+    {
+      "name": "parent"
+    },
+    {
+      "name": "emergCont"
+    },
+    {
+      "name": "player"
+    },
+    {
+      "name": "training"
+    }
+  ],
+  "paths": {
+    "/account": {
+      "x-swagger-router-controller": "csapiImpl",
+      "get": {
+        "tags": [
+          "account"
+        ],
+        "description": "gets array of all accounts",
+        "operationId": "getAllAccounts",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Account"
+              }
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "account"
+        ],
+        "description": "creates an account object",
+        "operationId": "createAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "account",
+            "description": "account object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/account/{accountId}": {
+      "x-swagger-router-controller": "csapiImpl",
+      "get": {
+        "tags": [
+          "account"
+        ],
+        "description": "gets an account object based on accountId",
+        "operationId": "getAccount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "accountId",
+            "description": "accountId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "account"
+        ],
+        "description": "update account object",
+        "operationId": "updateAccount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "accountId",
+            "description": "accountId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "account",
+            "description": "account object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "account"
+        ],
+        "description": "deletes an account object",
+        "operationId": "deleteAccount",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "accountId",
+            "description": "accountId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/parent": {
+      "x-swagger-router-controller": "csapiImpl",
+      "get": {
+        "tags": [
+          "parent"
+        ],
+        "description": "gets an array of all parents",
+        "operationId": "getAllParents",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Parent"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "parent"
+        ],
+        "description": "creates a parent object",
+        "operationId": "createParent",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "parent",
+            "description": "parent object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Parent"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Parent"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/parent/{parentId}": {
+      "x-swagger-router-controller": "csapiImpl",
+      "get": {
+        "tags": [
+          "parent"
+        ],
+        "description": "gets a parent object based on parentId",
+        "operationId": "getParent",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "parentId",
+            "description": "parentId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Parent"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "parent"
+        ],
+        "description": "update parent object",
+        "operationId": "updateParent",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "parentId",
+            "description": "parentId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "parent",
+            "description": "parent object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Parent"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Parent"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "parent"
+        ],
+        "description": "deletes a parent object",
+        "operationId": "deleteParent",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "parentId",
+            "description": "parentId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/emergCont": {
+      "x-swagger-router-controller": "csapiImpl",
+      "get": {
+        "tags": [
+          "emergCont"
+        ],
+        "description": "gets an array of all emergency contacts",
+        "operationId": "getAllEmergConts",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EmergCont"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "emergCont"
+        ],
+        "description": "creates a emergCont object",
+        "operationId": "createEmergCont",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "emergCont",
+            "description": "emergCont object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EmergCont"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/EmergCont"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/emergCont/{emergContId}": {
+      "x-swagger-router-controller": "csapiImpl",
+      "get": {
+        "tags": [
+          "emergCont"
+        ],
+        "description": "gets an emergCont object based on emergContId",
+        "operationId": "getEmergCont",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "emergContId",
+            "description": "emergContId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/EmergCont"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "emergCont"
+        ],
+        "description": "update emergCont object",
+        "operationId": "updateEmergCont",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "emergContId",
+            "description": "emergContId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "emergCont",
+            "description": "emergCont object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EmergCont"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/EmergCont"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "emergCont"
+        ],
+        "description": "deletes an emergCont object",
+        "operationId": "deleteEmergCont",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "emergContId",
+            "description": "emergContId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/player": {
+      "x-swagger-router-controller": "csapiImpl",
+      "get": {
+        "tags": [
+          "player"
+        ],
+        "description": "gets an array of all players",
+        "operationId": "getAllPlayers",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Player"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "player"
+        ],
+        "description": "creates a player object",
+        "operationId": "createPlayer",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "player",
+            "description": "player object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/player/{playerId}": {
+      "x-swagger-router-controller": "csapiImpl",
+      "get": {
+        "tags": [
+          "player"
+        ],
+        "description": "gets a player object based on playerId",
+        "operationId": "getPlayer",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "playerId",
+            "description": "playerId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "player"
+        ],
+        "description": "update player object",
+        "operationId": "updatePlayer",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "playerId",
+            "description": "playerId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "Player",
+            "description": "player object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "player"
+        ],
+        "description": "deletes a player object",
+        "operationId": "deletePlayer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "playerId",
+            "description": "playerId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/training": {
+      "x-swagger-router-controller": "csapiImpl",
+      "get": {
+        "tags": [
+          "training"
+        ],
+        "description": "gets an array of all trainings",
+        "operationId": "getAllTrainings",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Training"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "training"
+        ],
+        "description": "creates a training object",
+        "operationId": "createTraining",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "training",
+            "description": "training object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Training"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Training"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/training/{trainingId}": {
+      "x-swagger-router-controller": "csapiImpl",
+      "get": {
+        "tags": [
+          "training"
+        ],
+        "description": "gets a training object based on trainingId",
+        "operationId": "getTraining",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trainingId",
+            "description": "trainingId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Training"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "training"
+        ],
+        "description": "update training object",
+        "operationId": "updateTraining",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trainingId",
+            "description": "trainingId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "training",
+            "description": "training object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Training"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Training"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "training"
+        ],
+        "description": "deletes a training object",
+        "operationId": "deleteTraining",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "trainingId",
+            "description": "trainingId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Account": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "type": "string"
+        },
+        "parentIdArray": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "emergContArrray": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "playerIdArray": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Parent": {
+      "type": "object",
+      "required": [
+        "accountId"
+      ],
+      "properties": {
+        "parentId": {
+          "type": "string"
+        },
+        "accountId": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    },
+    "EmergCont": {
+      "type": "object",
+      "required": [
+        "accountId"
+      ],
+      "properties": {
+        "emergContId": {
+          "type": "string"
+        },
+        "accountId": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    },
+    "Player": {
+      "type": "object",
+      "required": [
+        "accountId"
+      ],
+      "properties": {
+        "playerId": {
+          "type": "string"
+        },
+        "accountId": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "dob": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "string"
+        }
+      }
+    },
+    "Training": {
+      "type": "object",
+      "properties": {
+        "trainingId": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "sport": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "playerIdArray": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "playerIdWaitArray": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

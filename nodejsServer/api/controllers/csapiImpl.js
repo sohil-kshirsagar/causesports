@@ -52,13 +52,25 @@ module.exports = {
   deleteTraining: deleteTraining,
 };
 
-var db = {
+/* var db = {
   account: {},
   parent: {},
   emergCont: {},
   player: {},
   training: {},
 };
+
+createRecord(tableName, key, record):
+    if (tableName not in db):
+        db[tableName] = {}
+    if (key not in db):
+        db[tableName][key] = record
+    else:
+
+updateRecord(tableName, key, record)
+deleteRecord(tableName, key)
+findRecord(tableName, key)
+getAllRecordsList(tableName) */
 
 /*
   Functions in a127 controllers used for operations should take two parameters:
@@ -69,7 +81,7 @@ var db = {
 
 function getAllAccounts(req, res) {
   console.log("req: ", req.swagger.params);
-  var response = [];
+  var response = getAllRecordsList('account')
   res.json(response);
 }
 function createAccount(req, res) {
