@@ -28,14 +28,17 @@ paths:
       produces:
       - application/json
       responses:
-        200:
+        "200":
           description: Success
           schema:
             type: array
             items:
               $ref: "#/definitions/Account"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          
     post:
       tags:
       - account
@@ -53,12 +56,14 @@ paths:
         schema:
           $ref: "#/definitions/Account"
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Account"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /account/{accountId}:
     x-swagger-router-controller: csapiImpl
@@ -76,12 +81,14 @@ paths:
         required: true
         type: string
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Account"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     patch:
       tags:
       - account
@@ -104,12 +111,14 @@ paths:
         schema:
           $ref: "#/definitions/Account"
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Account"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     delete:
       tags:
       - account
@@ -122,10 +131,14 @@ paths:
         required: true
         type: string
       responses:
-        200:
+        "200":
           description: Success
-        400:
+          schema:
+            type: string
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /parent:
     x-swagger-router-controller: csapiImpl
@@ -137,7 +150,7 @@ paths:
       produces:
       - application/json
       responses:
-        200:
+        "200":
           description: Success
           schema:
             type: array
@@ -160,12 +173,14 @@ paths:
         schema:
           $ref: "#/definitions/Parent"
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Parent"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /parent/{parentId}:
     x-swagger-router-controller: csapiImpl
@@ -183,12 +198,14 @@ paths:
         required: true
         type: string
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Parent"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     patch:
       tags:
       - parent
@@ -211,12 +228,14 @@ paths:
         schema:
           $ref: "#/definitions/Parent"
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Parent"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     delete:
       tags:
       - parent
@@ -229,10 +248,12 @@ paths:
         required: true
         type: string
       responses:
-        200:
+        "200":
           description: Success
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /emergCont:
     x-swagger-router-controller: csapiImpl
@@ -244,7 +265,7 @@ paths:
       produces:
       - application/json
       responses:
-        200:
+        "200":
           description: Success
           schema:
             type: array
@@ -267,12 +288,14 @@ paths:
         schema:
           $ref: "#/definitions/EmergCont"
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/EmergCont"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /emergCont/{emergContId}:
     x-swagger-router-controller: csapiImpl
@@ -290,12 +313,14 @@ paths:
         required: true
         type: string
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/EmergCont"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     patch:
       tags:
       - emergCont
@@ -318,12 +343,14 @@ paths:
         schema:
           $ref: "#/definitions/EmergCont"
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/EmergCont"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     delete:
       tags:
       - emergCont
@@ -336,10 +363,12 @@ paths:
         required: true
         type: string
       responses:
-        200:
+        "200":
           description: Success
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /player:
     x-swagger-router-controller: csapiImpl
@@ -351,7 +380,7 @@ paths:
       produces:
       - application/json
       responses:
-        200:
+        "200":
           description: Success
           schema:
             type: array
@@ -374,12 +403,14 @@ paths:
         schema:
           $ref: "#/definitions/Player"
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Player"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /player/{playerId}:
     x-swagger-router-controller: csapiImpl
@@ -397,12 +428,14 @@ paths:
         required: true
         type: string
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Player"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     patch:
       tags:
       - player
@@ -425,12 +458,14 @@ paths:
         schema:
           $ref: "#/definitions/Player"
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Player"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     delete:
       tags:
       - player
@@ -443,10 +478,12 @@ paths:
         required: true
         type: string
       responses:
-        200:
+        "200":
           description: Success
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /training:
     x-swagger-router-controller: csapiImpl
@@ -458,7 +495,7 @@ paths:
       produces:
       - application/json
       responses:
-        200:
+        "200":
           description: Success
           schema:
             type: array
@@ -481,12 +518,14 @@ paths:
         schema:
           $ref: "#/definitions/Training"
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Training"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /training/{trainingId}:
     x-swagger-router-controller: csapiImpl
@@ -504,12 +543,14 @@ paths:
         required: true
         type: string
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Training"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     patch:
       tags:
       - training
@@ -532,12 +573,14 @@ paths:
         schema:
           $ref: "#/definitions/Training"
       responses:
-        200:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/Training"
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     delete:
       tags:
       - training
@@ -550,10 +593,12 @@ paths:
         required: true
         type: string
       responses:
-        200:
+        "200":
           description: Success
-        400:
+        "400":
           description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
 definitions:
   Account:
@@ -649,3 +694,10 @@ definitions:
         type: array
         items:
           type: string
+  ErrorResponse:
+    type: object
+    properties:
+      errorCode:
+        type: string
+      errorDescription:
+        type: string

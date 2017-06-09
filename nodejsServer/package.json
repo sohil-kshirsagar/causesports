@@ -10,7 +10,8 @@
   "dependencies": {
     "express": "^4.12.3",
     "swagger-express-mw": "^0.1.0",
-    "swagger-ui-express": "^2.0.0"
+    "swagger-ui-express": "^2.0.0",
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
     "should": "^7.1.0",
