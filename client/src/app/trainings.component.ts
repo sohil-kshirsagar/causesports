@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-
-import { Training } from './training';
+import { MdListModule, MdButtonModule, MdSnackBar, MdToolbarModule } from '@angular/material';
 import { APIServiceFactory, APIService } from './api.service';
 
 //declare var parseDate: any;
@@ -14,16 +13,17 @@ import { APIServiceFactory, APIService } from './api.service';
 
 export class TrainingsComponent {
 	trainingList: {};
+	displayButton: boolean;
+	trainingBoolean: {}; //key to boolean mapping
 
-	constructor(private apiServiceFactory: APIServiceFactory) {
+	constructor(private apiServiceFactory: APIServiceFactory, public snackBar: MdSnackBar) {
 		this.trainingList = apiServiceFactory.getAPIService().getTrainings();
-		let dateObject = new Date(Date.parse("2016/06/10 16:00"));
-		console.log(dateObject.toDateString());
-		console.log(dateObject.toJSON());
-	}
-
-	getKeys(dict: {}): Array<string> {
-		return Object.keys(dict);
+		this.trainingBoolean = {};
+		for (let key of Object.keys(this.trainingList)) {
+			console.log(key);
+			this.trainingBoolean[key] = false;
+		}
+		this.displayButton = false;
 	}
 
 	reformatStart(start: string, duration: string): string {
@@ -100,6 +100,31 @@ export class TrainingsComponent {
 		return dateObject.toDateString() + " " + startTime + " to " + endTime;
 	}
 
+	openSnackBar() {
+    this.snackBar.open("Add player", "training", {
+    	//this should open dialog that allows user to register for training
+      duration: 2000,
+    });
+  }
 
+	getKeys(dict: {}): Array<string> {
+		return Object.keys(dict);
+	}
+
+	displayTrainings() {
+		this.displayButton = true;
+	}
+
+	hideTrainings() {
+		this.displayButton = false;
+	}
+
+  displayTraining(key: string) {
+  	this.trainingBoolean[key] = true;
+  }
+
+  hideTraining(key: string) {
+  	this.trainingBoolean[key] = false;
+  }
 }
 

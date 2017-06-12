@@ -47,7 +47,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -82,7 +85,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -115,7 +121,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -157,7 +166,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -178,10 +190,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -240,7 +258,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -273,7 +294,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -315,7 +339,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -336,10 +363,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -398,7 +431,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -431,7 +467,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -473,7 +512,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -494,10 +536,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -556,7 +604,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -589,7 +640,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -631,7 +685,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -652,10 +709,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -714,7 +777,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -747,7 +813,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -789,7 +858,10 @@
             }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       },
@@ -810,10 +882,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
           },
           "400": {
-            "description": "Error"
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
           }
         }
       }
@@ -832,7 +910,7 @@
             "type": "string"
           }
         },
-        "emergContArrray": {
+        "emergContIdArray": {
           "type": "array",
           "items": {
             "type": "string"
@@ -959,6 +1037,17 @@
           "items": {
             "type": "string"
           }
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "errorCode": {
+          "type": "string"
+        },
+        "errorDescription": {
+          "type": "string"
         }
       }
     }

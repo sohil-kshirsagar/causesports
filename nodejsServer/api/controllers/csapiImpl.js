@@ -84,14 +84,12 @@ function updateRecord(tableName, key, record) {
 }
 
 function deleteRecord(tableName, key) {
-  delete db[tableName][key];
-  return [true];
-  /* if (key in db[tableName]) {
+  if (key in db[tableName]) {
     delete db[tableName][key];
     return [true];
   } else {
     return [false];
-  } */
+  }
 }
 
 function getRecord(tableName, key) {
@@ -110,7 +108,23 @@ function getAllRecords(tableName) {
   return [true, list];
 }
 
-function addAttrToArray(attrArrName, attribute)
+function addAttrToArrInRecord(recordTableName, recordId, attrArrName, attr) {
+  db[recordTableName][recordId][attrArrName].push(attr);
+}
+
+function removeAttrFromArrayInRecord(recordTableName, recordId, attrArrName, attr) {
+  var attrArray = db[recordTableName][recordId][attrArrName];
+  var i = attrArray.indexOf(attr);
+  if (i != -1) {
+    attrArray.splice(i, 1);
+  }
+}
+
+function removeAttrFromWholeDict(tableName, attrArrName, attr) {
+  for (var key in db[tableName]) {
+    removeAttrFromArrayInRecord(tableName, key, attrArrName, attr);
+  }
+}
 
 /*
   Functions in a127 controllers used for operations should take two parameters:
@@ -179,9 +193,8 @@ function createParent(req, res) {
   console.log("req: ", req.swagger.params);
   var parentObj = req.swagger.params.parent.value;
   var resultArray = createRecord('parent', uuidV1(), 'parentId', parentObj);
-  var origAccountArray = getRecord('account', parentObj['accountId']);
-  if (resultArray[0] && origAccountArray[0]) {
-    origAccountArray[1]['parentIdArray'].push(resultArray[1]['parentId']);
+  if (resultArray[0]) {
+    addAttrToArrInRecord('account', parentObj['accountId'], 'parentIdArray', parentObj['parentId']);
     res.json(resultArray[1]);
   } else {
     res.status(400).send({"errorCode": "400", "errorDescription": "400 error"});
@@ -207,17 +220,19 @@ function updateParent(req, res) {
 }
 function deleteParent(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = deleteRecord('parent', req.swagger.params.parentId.value, req.swagger);
+  var parentAccountId = getRecord('parent', req.swagger.params.parentId.value)[1]['accountId'];
+  var resultArray = deleteRecord('parent', req.swagger.params.parentId.value);
   if (resultArray[0]) {
-    res.json(resultArray[1]);
+    removeAttrFromArrayInRecord('account', parentAccountId, 'parentIdArray', req.swagger.params.parentId.value);
+    res.json("success");
   } else {
     res.status(400).send({"errorCode": "400", "errorDescription": "400 error"});
   }
 }
+
 function getAllEmergConts(req, res) {
   console.log("req: ", req.swagger.params);
-  var response = [];
-  var resultArray = [];
+  var resultArray = getAllRecords('emergCont');
   if (resultArray[0]) {
     res.json(resultArray[1]);
   } else {
@@ -226,8 +241,10 @@ function getAllEmergConts(req, res) {
 }
 function createEmergCont(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var emergContObj = req.swagger.params.emergCont.value;
+  var resultArray = createRecord('emergCont', uuidV1(), 'emergContId', emergContObj);
   if (resultArray[0]) {
+    addAttrToArrInRecord('account', emergContObj['accountId'], 'emergContIdArray', emergContObj['emergContId']);
     res.json(resultArray[1]);
   } else {
     res.status(400).send({"errorCode": "400", "errorDescription": "400 error"});
@@ -235,7 +252,7 @@ function createEmergCont(req, res) {
 }
 function getEmergCont(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var resultArray = getRecord('emergCont', req.swagger.params.emergContId.value);
   if (resultArray[0]) {
     res.json(resultArray[1]);
   } else {
@@ -244,7 +261,7 @@ function getEmergCont(req, res) {
 }
 function updateEmergCont(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var resultArray = updateRecord('emergCont', req.swagger.params.emergContId.value, req.swagger.params.emergCont.value);
   if (resultArray[0]) {
     res.json(resultArray[1]);
   } else {
@@ -253,17 +270,19 @@ function updateEmergCont(req, res) {
 }
 function deleteEmergCont(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var emergContAccountId = getRecord('emergCont', req.swagger.params.emergContId.value)[1]['accountId'];
+  var resultArray = deleteRecord('emergCont', req.swagger.params.emergContId.value);
   if (resultArray[0]) {
-    res.json(resultArray[1]);
+    removeAttrFromArrayInRecord('account', emergContAccountId, 'emergContIdArray', req.swagger.params.emergContId.value);
+    res.json("success");
   } else {
     res.status(400).send({"errorCode": "400", "errorDescription": "400 error"});
   }
 }
+
 function getAllPlayers(req, res) {
   console.log("req: ", req.swagger.params);
-  var response = [];
-  var resultArray = [];
+  var resultArray = getAllRecords('player');
   if (resultArray[0]) {
     res.json(resultArray[1]);
   } else {
@@ -272,8 +291,10 @@ function getAllPlayers(req, res) {
 }
 function createPlayer(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var playerObj = req.swagger.params.player.value;
+  var resultArray = createRecord('player', uuidV1(), 'playerId', playerObj);
   if (resultArray[0]) {
+    addAttrToArrInRecord('account', playerObj['accountId'], 'playerIdArray', playerObj['playerId']);
     res.json(resultArray[1]);
   } else {
     res.status(400).send({"errorCode": "400", "errorDescription": "400 error"});
@@ -281,7 +302,7 @@ function createPlayer(req, res) {
 }
 function getPlayer(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var resultArray = getRecord('player', req.swagger.params.playerId.value);
   if (resultArray[0]) {
     res.json(resultArray[1]);
   } else {
@@ -290,7 +311,7 @@ function getPlayer(req, res) {
 }
 function updatePlayer(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var resultArray = updateRecord('player', req.swagger.params.playerId.value, req.swagger.params.player.value);
   if (resultArray[0]) {
     res.json(resultArray[1]);
   } else {
@@ -299,17 +320,21 @@ function updatePlayer(req, res) {
 }
 function deletePlayer(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var playerAccountId = getRecord('player', req.swagger.params.playerId.value)[1]['accountId'];
+  var resultArray = deleteRecord('player', req.swagger.params.playerId.value);
   if (resultArray[0]) {
-    res.json(resultArray[1]);
+    removeAttrFromArrayInRecord('account', playerAccountId, 'playerIdArray', req.swagger.params.playerId.value);
+    removeAttrFromWholeDict('training', 'playerIdArray', req.swagger.params.playerId.value);
+    removeAttrFromWholeDict('training', 'playerIdWaitArray', req.swagger.params.playerId.value);
+    res.json("success");
   } else {
     res.status(400).send({"errorCode": "400", "errorDescription": "400 error"});
   }
 }
+
 function getAllTrainings(req, res) {
   console.log("req: ", req.swagger.params);
-  var response = [];
-  var resultArray = [];
+  var resultArray = getAllRecords('training');
   if (resultArray[0]) {
     res.json(resultArray[1]);
   } else {
@@ -318,7 +343,7 @@ function getAllTrainings(req, res) {
 }
 function createTraining(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var resultArray = createRecord('training', uuidV1(), 'trainingId', req.swagger.params.training.value);
   if (resultArray[0]) {
     res.json(resultArray[1]);
   } else {
@@ -327,7 +352,7 @@ function createTraining(req, res) {
 }
 function getTraining(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var resultArray = getRecord('training', req.swagger.params.trainingId.value);
   if (resultArray[0]) {
     res.json(resultArray[1]);
   } else {
@@ -336,7 +361,7 @@ function getTraining(req, res) {
 }
 function updateTraining(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var resultArray = updateRecord('training', req.swagger.params.trainingId.value, req.swagger.params.training.value);
   if (resultArray[0]) {
     res.json(resultArray[1]);
   } else {
@@ -345,14 +370,42 @@ function updateTraining(req, res) {
 }
 function deleteTraining(req, res) {
   console.log("req: ", req.swagger.params);
-  var resultArray = [];
+  var resultArray = deleteRecord('training', req.swagger.params.trainingId.value);
   if (resultArray[0]) {
-    res.json(resultArray[1]);
+    res.json("success");
   } else {
     res.status(400).send({"errorCode": "400", "errorDescription": "400 error"});
   }
 }
 
+/*
+
+function initTestDB() {
+  var accountId = uuid();
+  var parentId = uuid();
+  createRecord('account', accountId, 'accountId', {});
+  createRecord('parent', parentId, 'parentId', {
+    'parentId': parentId,
+    'accountId': accountId,
+    'firstName': 'Shekhar',
+    'lastName': 'Kshirsagar',
+    'email' : 'shekhar.kshirsagar@gmail.com',
+    'phone' : '408-531-7316',
+    });
+
+
+  if (!(tableName in db)) {
+    db[tableName] = {};
+  }
+  record[idColName] = key;
+  if (!(key in db[tableName])) {
+    db[tableName][key] = record;
+    return [true, record];
+  } else {
+    return [false, record];
+  }
+}
+*/
 
 /* function hello(req, res) {
   // variables defined in the Swagger document can be referenced using req.swagger.params.{parameter_name}

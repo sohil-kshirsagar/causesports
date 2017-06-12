@@ -250,6 +250,8 @@ paths:
       responses:
         "200":
           description: Success
+          schema:
+            type: string
         "400":
           description: Error
           schema:
@@ -365,6 +367,8 @@ paths:
       responses:
         "200":
           description: Success
+          schema:
+            type: string
         "400":
           description: Error
           schema:
@@ -480,6 +484,8 @@ paths:
       responses:
         "200":
           description: Success
+          schema:
+            type: string
         "400":
           description: Error
           schema:
@@ -595,6 +601,8 @@ paths:
       responses:
         "200":
           description: Success
+          schema:
+            type: string
         "400":
           description: Error
           schema:
@@ -610,7 +618,7 @@ definitions:
         type: array
         items:
           type: string
-      emergContArrray:
+      emergContIdArray:
         type: array
         items:
           type: string

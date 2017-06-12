@@ -1,5 +1,42 @@
-<h2>Future Trainings</h2>
-<div *ngFor="let key of getKeys(trainingList)">
-	<p>{{reformatStart(trainingList[key].date + " " + trainingList[key].time, trainingList[key].duration)}}<br>
-	{{trainingList[key].sport}} @ {{trainingList[key].location}} ({{trainingList[key].level}})</p>
-</div>
+<md-toolbar color="primary">
+	<span>Future Trainings</span>
+	<span class="fill-remaining-space"></span>
+	<div [ngSwitch]="displayButton">
+			<button *ngSwitchCase="true" md-mini-fab (click)="hideTrainings()">
+				<md-icon>expand_less</md-icon>
+			</button>
+			<button *ngSwitchCase="false" md-mini-fab (click)="displayTrainings()">
+				<md-icon>expand_more</md-icon>
+			</button>
+	</div>
+</md-toolbar>
+<md-grid-list *ngIf="displayButton" cols="3" rowHeight="75px">
+	<ng-container *ngFor="let key of getKeys(trainingList)">
+		<md-grid-tile [colspan]="2"> 
+			<p>{{reformatStart(trainingList[key].date + " " + trainingList[key].time, trainingList[key].duration)}}<br>{{trainingList[key].sport}} @ {{trainingList[key].location}} (Level {{trainingList[key].level}})</p>
+			<p>
+		</md-grid-tile>
+		<md-grid-tile [colspan]="1">
+			<div [ngSwitch]="trainingBoolean[key]">
+				<button *ngSwitchCase="true" md-mini-fab (click)="hideTraining(key)">
+					<md-icon>expand_less</md-icon>
+				</button>
+				<button *ngSwitchCase="false" md-mini-fab (click)="displayTraining(key)">
+					<md-icon>expand_more</md-icon>
+				</button>
+			</div>
+		</md-grid-tile>
+		<md-grid-tile *ngIf="trainingBoolean[key]" [colspan]="3">
+				<button md-raised-button>Sohil</button>
+				<button md-raised-button>Sohil</button>
+		</md-grid-tile>
+	</ng-container>
+</md-grid-list>
+
+<!-- <md-nav-list>
+	<h2 md-header>Future Trainings</h2>
+	<md-list-item *ngFor="let key of getKeys(trainingList)">
+		<p md-line>{{reformatStart(trainingList[key].date + " " + trainingList[key].time, trainingList[key].duration)}}</p>
+		<p md-line>{{trainingList[key].sport}} @ {{trainingList[key].location}} ({{trainingList[key].level}})</p>
+	</md-list-item>
+</md-nav-list> -->

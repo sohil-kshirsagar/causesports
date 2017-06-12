@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { Training } from './training';
-
 export interface APIService {
 	getTrainings(): {};
 }
@@ -35,7 +33,7 @@ export class TestAPIService implements APIService {
 				duration: '01:00',
 				sport: 'Basketball',
 				location: 'Leland HS',
-				level: 'Beginner'
+				level: '1'
 			},
 			'hash_AB' : {
 				date: '2017/06/10',
@@ -43,7 +41,7 @@ export class TestAPIService implements APIService {
 				duration: '01:00',
 				sport: 'Basketball',
 				location: 'Leland HS',
-				level: 'Intermediate'
+				level: '2'
 			},
 			'hash_AC' : {
 				date: '2017/06/10',
@@ -51,7 +49,7 @@ export class TestAPIService implements APIService {
 				duration: '01:00',
 				sport: 'Basketball',
 				location: 'Leland HS',
-				level: 'Advanced'
+				level: '3',
 			},
 	};
 
