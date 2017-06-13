@@ -1,10 +1,3 @@
-<div class="jumbotron">
-  <div class="container">
-    <h1 class="display-3">Hello, world!</h1>
-    <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-  </div>
-</div>
 <md-toolbar color="primary">
 	<span>Future Trainings</span>
 	<span class="fill-remaining-space"></span>
@@ -17,28 +10,32 @@
 			</button>
 	</div>
 </md-toolbar>
-<md-grid-list *ngIf="displayButton" cols="3" rowHeight="1px" gutterSize="0px">
+<ng-container *ngIf="displayButton">
 	<ng-container *ngFor="let key of getKeys(trainingList)">
-		<md-grid-tile [colspan]="2" [rowspan]="75"> 
-			<p>{{reformatStart(trainingList[key].date + " " + trainingList[key].time, trainingList[key].duration)}}<br>{{trainingList[key].sport}} @ {{trainingList[key].location}} (Level {{trainingList[key].level}})</p>
-			<p>
-		</md-grid-tile>
-		<md-grid-tile [colspan]="1" [rowspan]="75">
-			<div [ngSwitch]="trainingBoolean[key]">
-				<button *ngSwitchCase="true" md-mini-fab (click)="hideTraining(key)">
-					<md-icon>expand_less</md-icon>
-				</button>
-				<button *ngSwitchCase="false" md-mini-fab (click)="displayTraining(key)">
-					<md-icon>expand_more</md-icon>
-				</button>
+		<div class="d-flex justify-content-center flex-row">
+			<div class="d-flex p-2"> 
+				<p>{{reformatStart(trainingList[key].date + " " + trainingList[key].time, trainingList[key].duration)}}<br>{{trainingList[key].sport}} @ {{trainingList[key].location}} (Level {{trainingList[key].level}})</p>
+				<p>
 			</div>
-		</md-grid-tile>
-		<md-grid-tile *ngIf="trainingBoolean[key]" [colspan]="3" [rowspan]="40">
-				<md-checkbox (click)="openSnackBar()">Sohil</md-checkbox>
-				<md-checkbox md-raised-button (click)="openSnackBar()">Sohan</md-checkbox>
-		</md-grid-tile>
+			<div class="d-flex p-2">
+				<div [ngSwitch]="trainingBoolean[key]">
+					<button *ngSwitchCase="true" md-mini-fab (click)="hideTraining(key)">
+						<md-icon>expand_less</md-icon>
+					</button>
+					<button *ngSwitchCase="false" md-mini-fab (click)="displayTraining(key)">
+						<md-icon>expand_more</md-icon>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-center flex-row">
+			<div class="d-flex p-2" *ngIf="trainingBoolean[key]">
+					<md-checkbox (click)="openSnackBar()">Sohil</md-checkbox>
+					<md-checkbox (click)="openSnackBar()">Sohan</md-checkbox>
+			</div>
+		</div>
 	</ng-container>
-</md-grid-list>
+</ng-container>
 
 <!-- <md-nav-list>
 	<h2 md-header>Future Trainings</h2>
