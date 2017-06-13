@@ -1,3 +1,10 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-3">Hello, world!</h1>
+    <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+  </div>
+</div>
 <md-toolbar color="primary">
 	<span>Future Trainings</span>
 	<span class="fill-remaining-space"></span>
@@ -10,13 +17,13 @@
 			</button>
 	</div>
 </md-toolbar>
-<md-grid-list *ngIf="displayButton" cols="3" rowHeight="75px">
+<md-grid-list *ngIf="displayButton" cols="3" rowHeight="1px" gutterSize="0px">
 	<ng-container *ngFor="let key of getKeys(trainingList)">
-		<md-grid-tile [colspan]="2"> 
+		<md-grid-tile [colspan]="2" [rowspan]="75"> 
 			<p>{{reformatStart(trainingList[key].date + " " + trainingList[key].time, trainingList[key].duration)}}<br>{{trainingList[key].sport}} @ {{trainingList[key].location}} (Level {{trainingList[key].level}})</p>
 			<p>
 		</md-grid-tile>
-		<md-grid-tile [colspan]="1">
+		<md-grid-tile [colspan]="1" [rowspan]="75">
 			<div [ngSwitch]="trainingBoolean[key]">
 				<button *ngSwitchCase="true" md-mini-fab (click)="hideTraining(key)">
 					<md-icon>expand_less</md-icon>
@@ -26,9 +33,9 @@
 				</button>
 			</div>
 		</md-grid-tile>
-		<md-grid-tile *ngIf="trainingBoolean[key]" [colspan]="3">
-				<button md-raised-button>Sohil</button>
-				<button md-raised-button>Sohil</button>
+		<md-grid-tile *ngIf="trainingBoolean[key]" [colspan]="3" [rowspan]="40">
+				<md-checkbox (click)="openSnackBar()">Sohil</md-checkbox>
+				<md-checkbox md-raised-button (click)="openSnackBar()">Sohan</md-checkbox>
 		</md-grid-tile>
 	</ng-container>
 </md-grid-list>

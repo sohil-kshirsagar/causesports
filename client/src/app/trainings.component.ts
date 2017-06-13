@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MdListModule, MdButtonModule, MdSnackBar, MdToolbarModule } from '@angular/material';
+import { MdListModule, MdButtonModule, MdSnackBar, MdToolbarModule, MdCheckboxModule } from '@angular/material';
 import { APIServiceFactory, APIService } from './api.service';
 
 //declare var parseDate: any;
@@ -101,7 +101,7 @@ export class TrainingsComponent {
 	}
 
 	openSnackBar() {
-    this.snackBar.open("Add player", "training", {
+    this.snackBar.open("Player added to cart", "training", {
     	//this should open dialog that allows user to register for training
       duration: 2000,
     });
