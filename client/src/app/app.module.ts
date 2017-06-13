@@ -5,7 +5,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { TrainingsComponent } from './trainings.component';
-import { APIServiceFactory } from './api.service';
+import { AccountApi }  from './codegen/api/AccountApi';
+import { EmergContApi }  from './codegen/api/EmergContApi';
+import { ParentApi }  from './codegen/api/ParentApi';
+import { PlayerApi }  from './codegen/api/PlayerApi';
+import { TrainingApi }  from './codegen/api/TrainingApi';
 
 @NgModule({
   declarations: [
@@ -18,7 +22,11 @@ import { APIServiceFactory } from './api.service';
     BrowserAnimationsModule
   ],
   providers: [
-  	APIServiceFactory
+    AccountApi,
+    EmergContApi,
+    ParentApi,
+    PlayerApi,
+    TrainingApi,
   ],
   bootstrap: [AppComponent]
 })

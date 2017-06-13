@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { MdListModule, MdButtonModule, MdSnackBar, MdToolbarModule, MdCheckboxModule } from '@angular/material';
 import { APIServiceFactory, APIService } from './api.service';
 
+import { TestDB } from './testdb'
+
 //declare var parseDate: any;
 //import './js/date.js';
 
@@ -12,12 +14,11 @@ import { APIServiceFactory, APIService } from './api.service';
 })
 
 export class TrainingsComponent {
-	trainingList: {};
+	trainingList: {} = {};
 	displayButton: boolean;
 	trainingBoolean: {}; //key to boolean mapping
 
-	constructor(private apiServiceFactory: APIServiceFactory, public snackBar: MdSnackBar) {
-		this.trainingList = apiServiceFactory.getAPIService().getTrainings();
+	constructor(public snackBar: MdSnackBar) {
 		this.trainingBoolean = {};
 		for (let key of Object.keys(this.trainingList)) {
 			console.log(key);

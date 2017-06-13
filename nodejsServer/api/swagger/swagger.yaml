@@ -8,6 +8,9 @@ host: localhost:10010
 
 basePath: /csapi
 
+schemes:
+  - http
+
 tags:
   - name: account
   - name: parent
