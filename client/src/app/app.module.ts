@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injectable } from '@angular/core';
 import { MaterialModule } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { HttpModule } from '@angular/http';
+import { FormsModule }   from '@angular/forms';
+
 
 import { AppComponent } from './app.component';
 import { TrainingsComponent } from './trainings.component';
@@ -19,7 +22,9 @@ import { TrainingApi }  from './codegen/api/TrainingApi';
   imports: [
     BrowserModule,
     MaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpModule,
+    FormsModule
   ],
   providers: [
     AccountApi,

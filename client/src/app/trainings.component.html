@@ -1,3 +1,12 @@
+<button md-raised-button (click)="populateStarterData()">Populate Data</button>
+<br>
+<md-input-container>
+  <input mdInput [(ngModel)]="accountId" placeholder="Account ID">
+</md-input-container>
+<br>
+<button md-raised-button (click)="getAccountInfo()">Get Account Info</button>
+<br>
+
 <md-toolbar color="primary">
 	<span>Future Trainings</span>
 	<span class="fill-remaining-space"></span>
@@ -11,14 +20,14 @@
 	</div>
 </md-toolbar>
 <ng-container *ngIf="displayButton">
-	<ng-container *ngFor="let key of getKeys(trainingList)">
+	<ng-container *ngFor="let key of getKeys(trainingDict)">
 		<div class="d-flex justify-content-center flex-row">
 			<div class="d-flex p-2"> 
-				<p>{{reformatStart(trainingList[key].date + " " + trainingList[key].time, trainingList[key].duration)}}<br>{{trainingList[key].sport}} @ {{trainingList[key].location}} (Level {{trainingList[key].level}})</p>
+				<p>{{reformatStart(trainingDict[key].date + " " + trainingDict[key].startTime, trainingDict[key].duration)}}<br>{{trainingDict[key].sport}} @ {{trainingDict[key].location}} (Level {{trainingDict[key].level}})</p>
 				<p>
 			</div>
 			<div class="d-flex p-2">
-				<div [ngSwitch]="trainingBoolean[key]">
+				<div [ngSwitch]="trainingDict[key].bool">
 					<button *ngSwitchCase="true" md-mini-fab (click)="hideTraining(key)">
 						<md-icon>expand_less</md-icon>
 					</button>
@@ -29,9 +38,20 @@
 			</div>
 		</div>
 		<div class="d-flex justify-content-center flex-row">
-			<div class="d-flex p-2" *ngIf="trainingBoolean[key]">
-					<md-checkbox (click)="openSnackBar()">Sohil</md-checkbox>
-					<md-checkbox (click)="openSnackBar()">Sohan</md-checkbox>
+			<div class="d-flex p-2" *ngIf="trainingDict[key].bool">
+					<ng-container *ngFor="let playerId of accountPlayers">
+						<ng-container [ngSwitch]="checkTrainingSignupStatus(playerId, trainingDict[key])">
+							<md-checkbox *ngSwitchCase="'signedup'" class="checkbox-margin" [checked]="true" [disabled]="true">
+								{{playerFirstNames[playerId]}}
+							</md-checkbox>
+							<md-checkbox *ngSwitchCase="'waitlist'" class="checkbox-margin" [indeterminate]="true" [disabled]="true">
+								{{playerFirstNames[playerId]}}
+							</md-checkbox>
+							<md-checkbox *ngSwitchDefault class="checkbox-margin" (click)="openSnackBar()">
+								{{playerFirstNames[playerId]}}
+							</md-checkbox>
+						</ng-container>
+					</ng-container>
 			</div>
 		</div>
 	</ng-container>
@@ -39,8 +59,8 @@
 
 <!-- <md-nav-list>
 	<h2 md-header>Future Trainings</h2>
-	<md-list-item *ngFor="let key of getKeys(trainingList)">
-		<p md-line>{{reformatStart(trainingList[key].date + " " + trainingList[key].time, trainingList[key].duration)}}</p>
-		<p md-line>{{trainingList[key].sport}} @ {{trainingList[key].location}} ({{trainingList[key].level}})</p>
+	<md-list-item *ngFor="let key of getKeys(trainingDict)">
+		<p md-line>{{reformatStart(trainingDict[key].date + " " + trainingDict[key].time, trainingDict[key].duration)}}</p>
+		<p md-line>{{trainingDict[key].sport}} @ {{trainingDict[key].location}} ({{trainingDict[key].level}})</p>
 	</md-list-item>
 </md-nav-list> -->

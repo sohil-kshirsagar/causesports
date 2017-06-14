@@ -1,11 +1,16 @@
-import { Component, Input } from '@angular/core';
-import { MdListModule, MdButtonModule, MdSnackBar, MdToolbarModule, MdCheckboxModule } from '@angular/material';
-import { APIServiceFactory, APIService } from './api.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { MdListModule, MdButtonModule, MdSnackBar, MdToolbarModule, MdCheckboxModule, MdInputModule } from '@angular/material';
 
 import { TestDB } from './testdb'
 
-//declare var parseDate: any;
-//import './js/date.js';
+import { AccountApi }  from './codegen/api/AccountApi';
+import { EmergContApi }  from './codegen/api/EmergContApi';
+import { ParentApi }  from './codegen/api/ParentApi';
+import { PlayerApi }  from './codegen/api/PlayerApi';
+import { TrainingApi }  from './codegen/api/TrainingApi';
+
+import * as models from './codegen/model/models';
+
 
 @Component({
 	selector: 'trainings',
@@ -14,17 +19,53 @@ import { TestDB } from './testdb'
 })
 
 export class TrainingsComponent {
-	trainingList: {} = {};
+	accountId: string;
+	accountPlayers: Array<string>;
+	playerFirstNames: {} = {};
+	trainingDict: {} = {};
 	displayButton: boolean;
-	trainingBoolean: {}; //key to boolean mapping
 
-	constructor(public snackBar: MdSnackBar) {
-		this.trainingBoolean = {};
-		for (let key of Object.keys(this.trainingList)) {
-			console.log(key);
-			this.trainingBoolean[key] = false;
-		}
+	constructor(private accountApi: AccountApi, private parentApi: ParentApi, private playerApi: PlayerApi, private emergContApi: EmergContApi, private trainingApi: TrainingApi, public snackBar: MdSnackBar) {
+
+		trainingApi.getAllTrainings().subscribe(
+			resp => {
+				console.log("getTrainings success", resp);
+				for (let trainingObject of resp) {
+					this.trainingDict[trainingObject.trainingId] = trainingObject;
+				}
+				console.log("trainingDict", this.trainingDict);
+				for (let key of Object.keys(this.trainingDict)) {
+					console.log(key);
+					this.trainingDict[key]["bool"] = false;
+				}
+			},
+			error => {
+				console.log("getTrainings error:", error);
+			}
+		);
 		this.displayButton = false;
+	}
+
+	getAccountInfo() {
+		console.log("accountId", this.accountId);
+		this.accountApi.getAccount(this.accountId).subscribe(
+			resp => {
+				console.log("getAccount success", resp);
+				this.accountPlayers = resp.playerIdArray;
+				for (let playerId of this.accountPlayers) {
+					this.playerFirstNames[playerId] = "Loading...";
+					this.getPlayerFirstName(playerId);
+				}
+			},
+			error => {
+				console.log("getAccount error:", error);
+			}
+		);
+	}
+
+	populateStarterData() {
+		let testDb = new TestDB();
+		testDb.initDB(this.accountApi, this.parentApi, this.playerApi, this.emergContApi, this.trainingApi);
 	}
 
 	reformatStart(start: string, duration: string): string {
@@ -101,6 +142,29 @@ export class TrainingsComponent {
 		return dateObject.toDateString() + " " + startTime + " to " + endTime;
 	}
 
+	checkTrainingSignupStatus(playerId: string, training: models.Training): string {
+		if (training.playerIdArray.indexOf(playerId) != -1) {
+			return 'signedup';
+		} else if (training.playerIdWaitArray.indexOf(playerId) != -1) {
+			return 'waitlist';
+		} else {
+			return '';
+		}
+	}
+
+	getPlayerFirstName(playerId: string) {
+		let playerFirstName: string;
+		this.playerApi.getPlayer(playerId).subscribe(
+			resp => {
+				console.log("getPlayer success", resp);
+				this.playerFirstNames[playerId] = resp.firstName;
+			},
+			error => {
+				console.log("getPlayer error:", error);
+			}
+		);
+	}
+
 	openSnackBar() {
     this.snackBar.open("Player added to cart", "training", {
     	//this should open dialog that allows user to register for training
@@ -121,11 +185,11 @@ export class TrainingsComponent {
 	}
 
   displayTraining(key: string) {
-  	this.trainingBoolean[key] = true;
+  	this.trainingDict[key]["bool"] = true;
   }
 
   hideTraining(key: string) {
-  	this.trainingBoolean[key] = false;
+  	this.trainingDict[key]["bool"] = false;
   }
 }
 
