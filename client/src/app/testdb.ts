@@ -57,6 +57,22 @@ export class TestDB {
 							console.log("createPlayer error:", error);
 						}
 					);
+					let player2: models.Player = {
+						accountId: accountId,
+						firstName: "Sohan",
+						lastName: "Kshirsagar",
+						dob: "10/28/2000",
+						gender: "Male",
+						comments: "is an idiot"
+					};
+					playerApi.createPlayer(player2).subscribe(
+						resp => {
+							console.log("createPlayer success", resp)
+						},
+						error => {
+							console.log("createPlayer error:", error);
+						}
+					);
 					let emergCont1: models.EmergCont = {
 						accountId: accountId,
 						firstName: "Swagat",

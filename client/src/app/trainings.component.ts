@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MdListModule, MdButtonModule, MdSnackBar, MdToolbarModule, MdCheckboxModule, MdInputModule } from '@angular/material';
+import { MdListModule, MdButtonModule, MdSnackBar, MdToolbarModule, MdCheckboxModule, MdInputModule, MdCardModule } from '@angular/material';
 
 import { TestDB } from './testdb'
 
@@ -19,11 +19,12 @@ import * as models from './codegen/model/models';
 })
 
 export class TrainingsComponent {
-	accountId: string;
+	accountId: string = "684df320-5197-11e7-8d78-233d574247f3";
 	accountPlayers: Array<string>;
-	playerFirstNames: {} = {};
+	playerTrainingInfo: {} = {};
 	trainingDict: {} = {};
 	displayButton: boolean;
+	trainingPrice: number = 20;
 
 	constructor(private accountApi: AccountApi, private parentApi: ParentApi, private playerApi: PlayerApi, private emergContApi: EmergContApi, private trainingApi: TrainingApi, public snackBar: MdSnackBar) {
 
@@ -53,9 +54,14 @@ export class TrainingsComponent {
 				console.log("getAccount success", resp);
 				this.accountPlayers = resp.playerIdArray;
 				for (let playerId of this.accountPlayers) {
-					this.playerFirstNames[playerId] = "Loading...";
+					this.playerTrainingInfo[playerId] = { firstName: "Loading...", trainingSignUp: {}};
+					for (let key of Object.keys(this.trainingDict)) {
+						console.log(key);
+						this.playerTrainingInfo[playerId]["trainingSignUp"][key] = false;
+					}
 					this.getPlayerFirstName(playerId);
 				}
+
 			},
 			error => {
 				console.log("getAccount error:", error);
@@ -157,7 +163,7 @@ export class TrainingsComponent {
 		this.playerApi.getPlayer(playerId).subscribe(
 			resp => {
 				console.log("getPlayer success", resp);
-				this.playerFirstNames[playerId] = resp.firstName;
+				this.playerTrainingInfo[playerId]["firstName"] = resp.firstName;
 			},
 			error => {
 				console.log("getPlayer error:", error);
@@ -165,12 +171,43 @@ export class TrainingsComponent {
 		);
 	}
 
-	openSnackBar() {
-    this.snackBar.open("Player added to cart", "training", {
-    	//this should open dialog that allows user to register for training
-      duration: 2000,
-    });
+	openSnackBar(playerInfo: {}, trainingArray: models.Training) {
+		console.log("playerInfo:", playerInfo);
+		if (playerInfo['trainingSignUp'][trainingArray.trainingId]) {
+			let message: string = trainingArray.sport + " training for " + playerInfo["firstName"] + " added to cart";
+	    this.snackBar.open(message, "Got it!", {
+	      duration: 2000,
+	    });
+  	} else {
+  		let message: string = trainingArray.sport + " training for " + playerInfo["firstName"] + " removed from cart";
+	    this.snackBar.open(message, "Got it!", {
+	      duration: 2000,
+	    });
+  	}
   }
+
+  countNumSignupsPlayer(playerId: string): number {
+  	let total = 0;
+  	for (let trainingId of this.getKeys(this.playerTrainingInfo[playerId]['trainingSignUp'])) {
+  		if (this.playerTrainingInfo[playerId]['trainingSignUp'][trainingId]) {
+  			total += 1;
+  		}
+  	}
+  	return total;
+  }
+
+  totalPriceCalc() {
+  	let price = this.countNumSignupsTotal() * this.trainingPrice;
+  	return price;
+  }
+
+	countNumSignupsTotal() {
+		let total = 0;
+		for (let playerId of this.getKeys(this.playerTrainingInfo)) {
+			total += this.countNumSignupsPlayer(playerId);
+		}
+		return total;
+	}
 
 	getKeys(dict: {}): Array<string> {
 		return Object.keys(dict);

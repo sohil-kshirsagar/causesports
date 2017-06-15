@@ -8,3 +8,42 @@
 	margin-left: 5px;
   margin-right: 5px;
 }
+
+.summary {
+	background-color: lightgrey;
+	flex-wrap: wrap;
+	width: 37%;
+	padding-left: 10px;
+}
+
+.topSummary {
+	padding-top: 10px;
+}
+
+.bottomSummary {
+	padding-bottom: 10px;
+}
+
+@media screen and (max-width: 950px) {
+	.summary {
+		background-color: lightgrey;
+		flex-wrap: wrap;
+		width: 50%;
+	}
+}
+
+@media screen and (max-width: 750px) {
+	.summary {
+		background-color: lightgrey;
+		flex-wrap: wrap;
+		width: 75%;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.summary {
+		background-color: lightgrey;
+		flex-wrap: wrap;
+		width: 95%;
+	}
+}
