@@ -539,7 +539,6 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-            
 
   /training/{trainingId}:
     x-swagger-router-controller: csapiImpl
@@ -561,6 +560,102 @@ paths:
           description: Success
           schema:
             $ref: "#/definitions/Training"
+        "400":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    get:
+      tags:
+      - training 
+      description: gets players from training only if they are part of specific account
+      operationId: getTrainingPlayerListForAccount
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: trainingId
+        description: trainingId
+        required: true
+        type: string
+      - in: body
+        name: accountId
+        description: accountId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+              items:
+                type: object
+                properties:
+                  playerId:
+                    type: string
+                  status:
+                    type: string
+        "400":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    patch:
+      tags:
+      - training
+      description: add (unpaid) player to training
+      operationId: addPlayerToTraining
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: trainingId
+        description: trainingId 
+        required: true
+        type: string
+      - in: body
+        name: playerId
+        description: playerId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: object
+            playerId:
+              type: string
+            status:
+              type: string
+        "400":
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    patch:
+      tags:
+      - training
+      description: remove player from training
+      operationId: removePlayerFromTraining
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: trainingId
+        description: trainingId 
+        required: true
+        type: string
+      - in: body
+        name: playerId
+        description: playerId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
         "400":
           description: Error
           schema:

@@ -51,6 +51,9 @@ module.exports = {
   getTraining: getTraining,
   updateTraining: updateTraining,
   deleteTraining: deleteTraining,
+  getTrainingPlayerListForAccount: getTrainingPlayerListForAccount,
+  addPlayerToTraining: addPlayerToTraining,
+  removePlayerFromTraining: removePlayerFromTraining,
 };
 
 var db = {
@@ -377,6 +380,20 @@ function deleteTraining(req, res) {
     res.status(400).send({"errorCode": "400", "errorDescription": "400 error"});
   }
 }
+
+function getTrainingPlayerListForAccount(req, res) {
+  console.log("req: ", req.swagger.params);
+
+}
+function addPlayerToTraining(req, res) {
+  console.log("req: ", req.swagger.params);
+  
+}
+function removePlayerFromTraining(req, res) {
+  console.log("req: ", req.swagger.params);
+}
+
+
 
 /*
 

@@ -43,8 +43,8 @@
           "200": {
             "description": "Success",
             "schema": {
-              "type": "array",
-              "items": {
+              "type": "object",
+              "additionalProperties": {
                 "$ref": "#/definitions/Account"
               }
             }
@@ -1029,16 +1029,27 @@
         "level": {
           "type": "string"
         },
-        "playerIdArray": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "capacity": {
+          "type": "number"
         },
-        "playerIdWaitArray": {
+        "confirmedCount": {
+          "type": "number"
+        },
+        "waitlistCount": {
+          "type": "number"
+        },
+        "playerInfoList": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "object",
+            "properties": {
+              "playerId": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            }
           }
         }
       }

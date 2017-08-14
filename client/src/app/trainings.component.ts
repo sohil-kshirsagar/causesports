@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChange } from '@angular/core';
 import { MdListModule, MdButtonModule, MdSnackBar, MdToolbarModule, MdCheckboxModule, MdInputModule, MdCardModule } from '@angular/material';
 
 import { TestDB } from './testdb'
@@ -18,33 +18,50 @@ import * as models from './codegen/model/models';
 	styleUrls: ['trainings.component.css'],
 })
 
-export class TrainingsComponent {
-	accountId: string = "684df320-5197-11e7-8d78-233d574247f3";
+export class TrainingsComponent implements OnInit, OnChanges {
+	accountId: string = "b305c9d0-5203-11e7-a9d2-01d5d0bcd095";
 	accountPlayers: Array<string>;
 	playerTrainingInfo: {} = {};
-	trainingDict: {} = {};
-	displayButton: boolean;
+	trainingDict: {};
+	displayButton: boolean = false;
 	trainingPrice: number = 20;
 
 	constructor(private accountApi: AccountApi, private parentApi: ParentApi, private playerApi: PlayerApi, private emergContApi: EmergContApi, private trainingApi: TrainingApi, public snackBar: MdSnackBar) {
+	}
 
-		trainingApi.getAllTrainings().subscribe(
+	ngOnInit() {
+		if (this.trainingDict == undefined) {
+			this.getTrainings();
+		}
+	}
+
+	getTrainings() {
+		this.trainingApi.getAllTrainings().subscribe(
 			resp => {
 				console.log("getTrainings success", resp);
+				this.trainingDict = {};
 				for (let trainingObject of resp) {
 					this.trainingDict[trainingObject.trainingId] = trainingObject;
+					this.trainingDict[trainingObject.trainingId]["playerInfoDict"] = {};
+					for (let playerInfo of this.trainingDict[trainingObject.trainingId]["playerInfoList"]) {
+						this.trainingDict[trainingObject.trainingId]["playerInfoDict"][playerInfo["playerId"]] = playerInfo;
+					}
 				}
 				console.log("trainingDict", this.trainingDict);
 				for (let key of Object.keys(this.trainingDict)) {
 					console.log(key);
-					this.trainingDict[key]["bool"] = false;
+					this.trainingDict[key]["displayBool"] = false;
 				}
 			},
 			error => {
 				console.log("getTrainings error:", error);
 			}
 		);
-		this.displayButton = false;
+	}
+
+	ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+		console.log("ngOnChanges", changes);
+		this.getTrainings();
 	}
 
 	getAccountInfo() {
@@ -149,12 +166,11 @@ export class TrainingsComponent {
 	}
 
 	checkTrainingSignupStatus(playerId: string, training: models.Training): string {
-		if (training.playerIdArray.indexOf(playerId) != -1) {
-			return 'signedup';
-		} else if (training.playerIdWaitArray.indexOf(playerId) != -1) {
-			return 'waitlist';
+		console.log("training: ", training);
+		if (playerId in this.getKeys(training["playerInfoDict"])) {
+			return training["playerInfoDict"][playerId]["status"];
 		} else {
-			return '';
+			return "unpaid";
 		}
 	}
 
@@ -222,11 +238,11 @@ export class TrainingsComponent {
 	}
 
   displayTraining(key: string) {
-  	this.trainingDict[key]["bool"] = true;
+  	this.trainingDict[key]["displayBool"] = true;
   }
 
   hideTraining(key: string) {
-  	this.trainingDict[key]["bool"] = false;
+  	this.trainingDict[key]["displayBool"] = false;
   }
 }
 
