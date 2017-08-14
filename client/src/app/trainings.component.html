@@ -40,7 +40,7 @@
 			<div class="d-flex justify-content-center flex-row">
 				<div class="d-flex p-2">
 						<ng-container *ngFor="let playerId of accountPlayers">
-							<ng-container [ngSwitch]="checkTrainingSignupStatus(playerId, trainingDict[key])">
+							<ng-container [ngSwitch]="checkTrainingSignupStatus(playerId, key)">
 								<md-checkbox *ngSwitchCase="'paid-confirm'" class="checkbox-margin" [checked]="true" [disabled]="true">
 									{{playerTrainingInfo[playerId].firstName}}
 								</md-checkbox>
@@ -85,7 +85,7 @@
 				<strong>&nbsp;Total Payment due: ${{totalPriceCalc()}}</strong>
 		</div>
 		<div class="d-flex mx-auto justify-content-center summary bottomSummary">
-			<button md-raised-button color="accent">Submit</button>
+			<button md-raised-button color="accent" (click)="updateTraining()">Submit</button>
 		</div>
 	</ng-container>
 </ng-container>

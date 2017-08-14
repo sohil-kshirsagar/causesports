@@ -709,14 +709,8 @@ definitions:
       waitlistCount:
         type: number
       playerInfoList:
-        type: array
-        items:
-          type: object
-          properties:
-            playerId:
-              type: string
-            status:
-              type: string
+        type: object
+
   ErrorResponse:
     type: object
     properties:

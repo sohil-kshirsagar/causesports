@@ -100,7 +100,8 @@ export class TestDB {
 			sport: 'Basketball',
 			location: 'Leland HS',
 			level: '1',
-			playerInfoList: []
+			playerInfoList: {},
+		  confirmedCount: 0,
 		};
 		trainingApi.createTraining(training1).subscribe(
 			resp => {
@@ -117,7 +118,8 @@ export class TestDB {
 			sport: 'Basketball',
 			location: 'Leland HS',
 			level: '2',
-			playerInfoList: []
+			playerInfoList: {},
+		  confirmedCount: 0,
 		};
 		trainingApi.createTraining(training2).subscribe(
 			resp => {
@@ -134,7 +136,8 @@ export class TestDB {
 			sport: 'Basketball',
 			location: 'Leland HS',
 			level: '3',
-			playerInfoList: []
+			playerInfoList: {},
+		  confirmedCount: 0,
 		};
 		trainingApi.createTraining(training3).subscribe(
 			resp => {

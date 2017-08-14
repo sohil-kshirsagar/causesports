@@ -109,7 +109,6 @@ function getAllRecords(tableName) {
     list.push(db[tableName][key]);
   }
   **/
-  console.log("trying to get all records of " + tableName + JSON.stringify(db[tableName]));
   return [true, db[tableName]];
 }
 

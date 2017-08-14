@@ -19,7 +19,7 @@ import * as models from './codegen/model/models';
 })
 
 export class TrainingsComponent implements OnInit, OnChanges {
-	accountId: string = "b305c9d0-5203-11e7-a9d2-01d5d0bcd095";
+	accountId: string;
 	accountPlayers: Array<string>;
 	playerTrainingInfo: {} = {};
 	trainingDict: {};
@@ -39,19 +39,12 @@ export class TrainingsComponent implements OnInit, OnChanges {
 		this.trainingApi.getAllTrainings().subscribe(
 			resp => {
 				console.log("getTrainings success", resp);
-				this.trainingDict = {};
-				for (let trainingObject of resp) {
-					this.trainingDict[trainingObject.trainingId] = trainingObject;
-					this.trainingDict[trainingObject.trainingId]["playerInfoDict"] = {};
-					for (let playerInfo of this.trainingDict[trainingObject.trainingId]["playerInfoList"]) {
-						this.trainingDict[trainingObject.trainingId]["playerInfoDict"][playerInfo["playerId"]] = playerInfo;
-					}
-				}
-				console.log("trainingDict", this.trainingDict);
+				this.trainingDict = resp;
 				for (let key of Object.keys(this.trainingDict)) {
-					console.log(key);
+
 					this.trainingDict[key]["displayBool"] = false;
 				}
+				console.log("trainingDict", this.trainingDict);
 			},
 			error => {
 				console.log("getTrainings error:", error);
@@ -165,10 +158,10 @@ export class TrainingsComponent implements OnInit, OnChanges {
 		return dateObject.toDateString() + " " + startTime + " to " + endTime;
 	}
 
-	checkTrainingSignupStatus(playerId: string, training: models.Training): string {
-		console.log("training: ", training);
-		if (playerId in this.getKeys(training["playerInfoDict"])) {
-			return training["playerInfoDict"][playerId]["status"];
+	checkTrainingSignupStatus(playerId: string, key: string): string {
+		console.log("checkTrainingSignupStatus", this.trainingDict[key], playerId, this.getKeys(this.trainingDict[key]["playerInfoList"]));
+		if (this.getKeys(this.trainingDict[key]["playerInfoList"]).indexOf(playerId) != -1) {
+			return this.trainingDict[key]["playerInfoList"][playerId]["status"];
 		} else {
 			return "unpaid";
 		}
@@ -244,5 +237,37 @@ export class TrainingsComponent implements OnInit, OnChanges {
   hideTraining(key: string) {
   	this.trainingDict[key]["displayBool"] = false;
   }
+
+  updateTraining() {
+  	console.log("updateTraining before: ", this.trainingDict, this.playerTrainingInfo);
+  	for (let playerId of this.getKeys(this.playerTrainingInfo)) {
+  		for (let trainingId of this.getKeys(this.playerTrainingInfo[playerId]['trainingSignUp'])) {
+	  		if (this.playerTrainingInfo[playerId]['trainingSignUp'][trainingId]) {
+	  			this.trainingDict[trainingId]['confirmedCount'] += 1;
+	  			this.trainingDict[trainingId]['playerInfoList'][playerId] = {"status": "paid-confirm"};
+	  				// need to add logic where I check the number of people who have signed up for training
+	  				// if the number of people is at capacity - need to ask user if it is okay to be placed on waitlist
+	  		}
+  		}
+  	}
+
+  	for (let trainingId of this.getKeys(this.trainingDict)) {
+  		delete this.trainingDict["displayBool"];
+  		console.log("updateTraining after deleting displayBool", this.trainingDict);
+	  	this.trainingApi.updateTraining(trainingId, this.trainingDict[trainingId]).subscribe(
+				resp => {
+				},
+				error => {
+					console.log("getTrainings error:", error);
+				}
+			);
+  	}
+
+  	this.getTrainings();
+
+		console.log("updateTraining after: ", this.trainingDict, this.playerTrainingInfo);
+  }
+
+
 }
 
