@@ -36,7 +36,7 @@ module.exports = {
   getParent: getParent,
   updateParent: updateParent,
   deleteParent: deleteParent,
-  getAllEmergCont: getAllEmergConts,
+  getAllEmergConts: getAllEmergConts,
   createEmergCont: createEmergCont,
   getEmergCont: getEmergCont,
   updateEmergCont: updateEmergCont,
@@ -104,11 +104,13 @@ function getRecord(tableName, key) {
 }
 
 function getAllRecords(tableName) {
-  var list = [];
+  /** var list = [];
   for (var key in db[tableName]) {
     list.push(db[tableName][key]);
   }
-  return [true, list];
+  **/
+  console.log("trying to get all records of " + tableName + JSON.stringify(db[tableName]));
+  return [true, db[tableName]];
 }
 
 function addAttrToArrInRecord(recordTableName, recordId, attrArrName, attr) {

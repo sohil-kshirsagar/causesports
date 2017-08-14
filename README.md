@@ -7,6 +7,7 @@ server is javascript (use nodejs environment)
 1. npm start (/nodejsserver)
 1. ng serve (/client)
 1. swagger ui is at http://localhost:10010/api-docs/
+1. to edit swagger file/test "swagger project edit"
 
 
 ## modify api:

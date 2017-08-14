@@ -34,7 +34,7 @@
         "tags": [
           "account"
         ],
-        "description": "gets array of all accounts",
+        "description": "gets dictionary of all accounts",
         "operationId": "getAllAccounts",
         "produces": [
           "application/json"
@@ -213,7 +213,7 @@
         "tags": [
           "parent"
         ],
-        "description": "gets an array of all parents",
+        "description": "gets an dictionary of all parents",
         "operationId": "getAllParents",
         "produces": [
           "application/json"
@@ -222,8 +222,8 @@
           "200": {
             "description": "Success",
             "schema": {
-              "type": "array",
-              "items": {
+              "type": "object",
+              "additionalProperties": {
                 "$ref": "#/definitions/Parent"
               }
             }
@@ -386,7 +386,7 @@
         "tags": [
           "emergCont"
         ],
-        "description": "gets an array of all emergency contacts",
+        "description": "gets an dictionary of all emergency contacts",
         "operationId": "getAllEmergConts",
         "produces": [
           "application/json"
@@ -395,8 +395,8 @@
           "200": {
             "description": "Success",
             "schema": {
-              "type": "array",
-              "items": {
+              "type": "object",
+              "additionalProperties": {
                 "$ref": "#/definitions/EmergCont"
               }
             }
@@ -559,7 +559,7 @@
         "tags": [
           "player"
         ],
-        "description": "gets an array of all players",
+        "description": "gets an dictionary of all players",
         "operationId": "getAllPlayers",
         "produces": [
           "application/json"
@@ -568,8 +568,8 @@
           "200": {
             "description": "Success",
             "schema": {
-              "type": "array",
-              "items": {
+              "type": "object",
+              "additionalProperties": {
                 "$ref": "#/definitions/Player"
               }
             }
@@ -732,7 +732,7 @@
         "tags": [
           "training"
         ],
-        "description": "gets an array of all trainings",
+        "description": "gets an dictionary of all trainings",
         "operationId": "getAllTrainings",
         "produces": [
           "application/json"
@@ -741,8 +741,8 @@
           "200": {
             "description": "Success",
             "schema": {
-              "type": "array",
-              "items": {
+              "type": "object",
+              "additionalProperties": {
                 "$ref": "#/definitions/Training"
               }
             }
